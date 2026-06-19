@@ -1,0 +1,40 @@
+@inherits Dynamicweb.Rendering.RazorTemplateBase<Dynamicweb.Rendering.RazorTemplateModel<Dynamicweb.Rendering.Template>>
+@using Dynamicweb.Ecommerce.Cart
+
+<nav aria-label="breadcrumb" class="mb-3 mb-md-4 fs-8" id="StepsBreadcrumbs">
+	<ol class="breadcrumb" style="--bs-breadcrumb-divider: '>'; --bs-breadcrumb-item-padding-x: 1rem; --bs-breadcrumb-font-size: .875em;">
+		@foreach (LoopItem step in GetLoop("StepButtons"))
+		{
+			if (step.GetString("Step.Name").ToLower() != "checkout")
+			{
+				if (step.GetBoolean("Step.Current"))
+				{
+					<li class="breadcrumb-item active" aria-current="page">@Translate(step.GetString("Step.Name"))</li>
+					break;
+				}
+				else
+				{
+					<li class="breadcrumb-item">@Translate(step.GetString("Step.Name"))</li>
+				}
+			}
+		}
+
+		@if (GetLoop("StepButtons").Count == 0)
+		{
+			var cartSettings = new ModuleSettings(Pageview.CurrentParagraph.ModuleProperties);
+
+			foreach (CartStepInfo step in cartSettings.Steps)
+			{
+				if (step.IsCheckout)
+				{
+					<li class="breadcrumb-item" aria-current="page">@Translate(step.Name)</li>
+					break;
+				}
+				else
+				{
+					<li class="breadcrumb-item">@Translate(step.Name)</li>
+				}
+			}
+		}
+	</ol>
+</nav>

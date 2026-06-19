@@ -1,0 +1,26 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Ecommerce.ProductCatalog
+
+@{
+	ProductViewModel product = null;
+	if (Dynamicweb.Context.Current.Items.Contains("ProductDetails"))
+	{
+		product = (ProductViewModel)Dynamicweb.Context.Current.Items["ProductDetails"];
+	}
+
+	string productQuantity = "1";
+	if (Dynamicweb.Context.Current.Items.Contains("ProductQuantity"))
+	{
+		productQuantity = Dynamicweb.Context.Current.Items["ProductQuantity"].ToString();
+	}
+
+	string fontSize = Model.Item.GetRawValueString("Size", "fs-6");
+	string horizontalAlign = Model.Item.GetRawValueString("HorizontalAlignment", "start");
+	horizontalAlign = horizontalAlign == "center" ? "justify-content-center" : horizontalAlign;
+	horizontalAlign = horizontalAlign == "end" ? "justify-content-end" : horizontalAlign;
+}
+
+@if (product is object || Pageview.IsVisualEditorMode)
+{
+	<div class="@fontSize d-flex @horizontalAlign" data-dw-colorscheme="@Model.ColorScheme?.Id">@Translate("Qty"): @productQuantity</div>
+}

@@ -1,0 +1,57 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.Navigation.NavigationTreeViewModel>
+@using System.IO
+@using System.Text.RegularExpressions
+@using Dynamicweb
+@using Dynamicweb.Ecommerce.Orders
+
+@{
+	string colorScheme = Pageview.CurrentParagraph?.ColorSchemeId;
+	string attributeIdSuffix = $"p{Pageview.CurrentParagraph?.ID}";
+	bool showOnlyFirstNavLevel = Model.Parameters.Keys.Contains("ShowOnlyFirstNavLevel") ? Convert.ToBoolean(Model.Parameters["ShowOnlyFirstNavLevel"]) : false;
+}
+
+@foreach (var node in Model.Nodes)
+{
+	var nodePage = Dynamicweb.Content.Services.Pages.GetPage(node.PageId);
+	var pageIcon = string.Empty;
+	if (nodePage?.PropertyItem is not null)
+	{
+		if(nodePage.PropertyItem.TryGetValue("Icon", out object? pageIconValue))
+		{
+			pageIcon = Dynamicweb.Core.Converter.ToString(pageIconValue);
+		}
+	}
+
+	var iconPath = pageIcon;
+	var hasChildren = node.Nodes.Count() > 0;
+	string nodeId = $"nav_{node?.GroupId ?? node.PageId.ToString()}_{attributeIdSuffix}";
+	string dropdownAttributes = hasChildren && !showOnlyFirstNavLevel ? " role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\" data-bs-toggle=\"dropdown\"" : string.Empty;
+	string ariaCurrent = node.IsActive ? "aria-current='page'" : string.Empty;
+
+	<li class="nav-item @(hasChildren ? "dropdown position-static" : null)">
+		
+		<a @(node.IsClickable ? $"href=\"{node.Link}\"" : null) class="nav-link hstack p-2 gap-2 text-nowrap text-decoration-underline-hover @(node.IsActive ? "active" : string.Empty)" @(dropdownAttributes) @(ariaCurrent) id="@nodeId">
+			@if (pageIcon.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
+			{
+				<span class="icon-3 pe-none">@ReadFile(iconPath)</span>
+			}
+			<span class="@(!node.IsClickable ? "pe-none" : null)">@node.Name</span>
+		</a>
+
+		@if (hasChildren && !showOnlyFirstNavLevel)
+		{
+			<ul class="dropdown-menu dropdown-menu-shadow" aria-labelledby="@nodeId" data-dw-colorscheme="light">
+				@foreach (var subnode in node.Nodes) // Standard pages
+				{
+					nodeId = $"nav_{subnode?.GroupId ?? subnode.PageId.ToString()}_{attributeIdSuffix}"; 
+
+					<li>
+						<a @(subnode.IsClickable ? $"href=\"{subnode.Link}\"" : null) class="dropdown-item" @(subnode.IsActive ? " aria-current='page'" : string.Empty) id="@nodeId">
+							<span class="@(!subnode.IsClickable ? "pe-none" : null)">@subnode.Name</span>
+						</a>
+					</li>
+				}
+			</ul>
+		}
+	</li>
+}

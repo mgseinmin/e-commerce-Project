@@ -1,0 +1,204 @@
+﻿@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Frontend
+@using Microsoft.AspNetCore.Http.Extensions
+@using System.Web
+@using Microsoft.AspNetCore.SystemWebAdapters
+@using System.Net.Http
+
+@{
+	var context = HttpContext.Current;
+}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Welcome back!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@if (!string.IsNullOrEmpty(context.Request["username"])){
+	<text>
+		<h4>@context.Request["username"]</h4>
+		@context.Request.Url
+	</text>
+}
+<script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+<div>
+	
+	<div data-swift-text class="text-center mx-auto mb-0-last-child">
+		@if (Model.Item.TryGetString("Title", out string title)) {
+			@title
+		}
+		@if (Model.Item.TryGetString("Subtitle", out string subtitle)) {
+			@subtitle
+		}
+		@if (Model.Item.TryGetString("Text", out string text)) {
+			@text
+		}
+	</div>
+	<div class="d-flex flex-wrap gap-2 align-items-center justify-content-center">
+		@if (Model.Item.TryGetButton("FirstButton", out ButtonViewModel firstButton)) {
+			<a href="@firstButton.Link.Url" class="btn btn-@firstButton.Style" data-dw-button="@firstButton.Style">@firstButton.Label</a>
+		}
+		@if (Model.Item.TryGetButton("SecondButton", out ButtonViewModel secondButton)) {
+			<a href="@secondButton.Link.Url" class="btn btn-@secondButton.Style" data-dw-button="@secondButton.Style">@secondButton.Label</a>
+		}
+	</div>
+</div>
+<div>
+    <input type="text" id="username" value="sein min">
+    <input type="text" id="password" value="smpass">
+    <button id="loginbtn">login</button>
+</div>
+<div>
+	<button id="fetchBtn">Fetch User</button>
+    
+    <!-- The Container to show results -->
+    <div id="result-container">
+        <p>Click the button to fetch data...</p>
+    </div>
+</div>
+<script>
+            let token = '';
+        let baseUrl = 'https://localhost:7088';
+	$('document').ready(function(){
+        var $resultContainer = $('#result-container');
+        $('#loginbtn').click(function(){
+            let uname = $('#username').val;
+            let pass = $('#password').val;
+            const requestBody = {
+                username : 'user',
+                password : 'user'
+            };
+            $.ajax({
+                url: `${baseUrl}/api/account/login`,
+                method: 'POST',
+                
+                contentType: 'application/json',
+                data : JSON.stringify(requestBody),
+                dataType: 'json', // Expects JSON back from server
+                
+                crossDomain: true,
+                success: function(data) {
+                    // 'data' is the parsed JSON object returned by the API
+                    token = data.accessToken;
+                    // Build the HTML to display the result
+                    var htmlContent = `
+                        <h3 class="book-title">successfully login... <i>${data.userName}</i>
+                        </h3>
+                        <br>
+                        <h6>${data.accessToken}</h6>
+                    `;
+                    
+                    // Inject the HTML into the result container
+                    $resultContainer.html(htmlContent);
+                },
+                
+                // 5. Handle Errors
+                error: function(xhr, status, error) {
+                    $resultContainer.html('<p class="error">Error fetching data: ' + error + '</p>');
+                    console.error("API Error Details:", xhr.responseText);
+                },
+            })
+        })
+		$('#fetchBtn').click(function() {
+                
+                // Show loading state and disable button to prevent double clicks
+                $resultContainer.html('<p class="loading">Loading data, please wait...</p>');
+                $(this).prop('disabled', true).text('Fetching...');
+
+                // 3. Make the AJAX GET request
+                $.ajax({
+                    url: `${baseUrl}/api/useraccounts`, // Public dummy API
+                    method: 'GET',
+					contentType: 'application/json',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    dataType: 'json', // Expect JSON back from the server
+					xhrFields: {
+                        withCredentials: true // Sends cookies/session headers
+                    },
+                    crossDomain: true,
+                    // 4. Handle Success
+                    success: function(data) {
+                        // 'data' is the parsed JSON object returned by the API
+                        console.log(typeof data)
+                        console.log(data)
+                        // Build the HTML to display the result
+                        var htmlContent = `
+                            <h3 class="book-title">${data.data}</h3>
+                        `;
+                        data.data.forEach(acc => {
+                            htmlContent += `${acc.id}...${acc.userName}....${acc.password}<br>`;
+                            
+                        });
+                        // Inject the HTML into the result container
+                        $resultContainer.html(htmlContent);
+                    },
+                    // 5. Handle Errors
+                    error: function(xhr, status, error) {
+                        $resultContainer.html('<p class="error">Error fetching data: ' + error + '</p>');
+                        console.error("API Error Details:",error.toString());
+                    },
+                    
+                    // 6. Always runs (Success or Error) - Re-enable the button
+                    complete: function() {
+                        $('#fetchBtn').prop('disabled', false).text('Fetch User');
+                    }
+                });
+            });
+        
+	})
+
+// document.getElementById('fetchBtn').addEventListener('click', async function() {
+//     const button = this; // 'this' refers to the clicked button
+//     let resultContainer = document.getElementById('result-container');
+//     // 1. Show loading state and disable button to prevent double clicks
+//     resultContainer.innerHTML = '<p class="loading">Loading data, please wait...</p>';
+//     button.disabled = true;
+//     button.textContent = 'Fetching...';
+
+//     try {
+//         // 2. Make the Fetch GET request
+//             const response = await fetch(`${baseUrl}/api/useraccounts`, {
+//             method: 'GET',
+//             credentials: 'include', // CRITICAL: Replaces xhrFields: { withCredentials: true }
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'accept' : 'application/json',
+//                 'Authorization': 'Bearer ' + token 
+//                  // Replaces contentType
+//             }
+//         });
+
+//         // 3. IMPORTANT: Fetch does NOT reject on HTTP errors (like 404 or 500). 
+//         // We must check response.ok manually to trigger the catch block.
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+
+//         // 4. Parse the JSON (Replaces dataType: 'json')
+//         const result = await response.json();
+        
+//         // 5. Handle Success
+//         console.log(result);
+//         resultStr = JSON.parse(result);
+//         let htmlContent = `<h3 class="book-title">${result.data.toString()}</h3>`;
+//         let data = resultStr.data;
+//         console.log(data);
+//         data.foreach(item => {
+//             htmlContent = htmlContent.concat(`<p>${item.userName}</p>...<p>${item.password}</p><br>`);
+//         });
+        
+//         resultContainer.innerHTML = htmlContent;
+
+//     } catch (error) {
+//         // 6. Handle Errors (Replaces the 'error' callback)
+//         resultContainer.innerHTML = `<p class="error">Error fetching data: ${error.message || error}</p>`;
+//         console.error("API Error Details:", error);
+        
+//     } finally {
+//         // 7. Always runs (Success or Error) - Re-enable the button (Replaces 'complete')
+//         button.disabled = false;
+//         button.textContent = 'Fetch User';
+//     }
+// });
+</script>

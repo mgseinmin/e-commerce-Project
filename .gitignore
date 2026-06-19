@@ -1,0 +1,40 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/bin/Debug/net8.0/cs
+/bin/Debug/net8.0
+/Properties
+/obj
+
+*.config
+*.jpg
+*.zip
+*.gif
+*.temp
+*.log
+/properties/
+/bin/
+/obj/
+Cache.net/
+# Build artifacts and outputs
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+x64/
+x86/
+arm/
+arm64/
+artifacts/
+# VS Code workspaces and local settings
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+
+packages/
+*.nuget.props
+*.nuget.targets

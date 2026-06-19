@@ -1,0 +1,1 @@
+{"Id":"ce893618983c4534aec5a6fd96839587","Name":"","ModelType":"Dynamicweb.Application.UI.Models.CommandDataModel","Query":{"Query":{"Name":"DashboardWidgetSortSave","Type":"CommandByName","QueryContext":{"ScreenTypeName":"CommandExecute"}},"QueryType":"CommandByName"},"Modifications":[]}

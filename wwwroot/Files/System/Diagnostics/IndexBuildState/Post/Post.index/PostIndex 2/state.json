@@ -1,0 +1,18 @@
+{
+  "Repository": "Post",
+  "IndexName": "Post.index",
+  "InstanceName": "PostIndex 2",
+  "BuildName": "Post",
+  "OperationId": "65a0664a14e24404ade9f63b43b2e226",
+  "State": "Completed",
+  "StartedAtUtc": "2026-06-19T03:10:00.9836925Z",
+  "LastHeartbeatUtc": "2026-06-19T03:10:08.2972194Z",
+  "FinishedAtUtc": "2026-06-19T03:10:08.2972194Z",
+  "LastSuccessfulBuildUtc": "2026-06-19T03:10:08.2972194Z",
+  "ResumeCursor": "",
+  "ResumeSupported": false,
+  "IsOnlineInstance": false,
+  "ErrorSummary": "",
+  "ErrorDetails": "",
+  "ServerId": "DESKTOP-2BPIN9V"
+}

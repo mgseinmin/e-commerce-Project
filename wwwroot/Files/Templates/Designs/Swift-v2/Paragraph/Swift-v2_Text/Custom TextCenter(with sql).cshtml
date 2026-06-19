@@ -1,0 +1,73 @@
+﻿
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Frontend
+@using System.Data;
+@using System.Linq;
+
+<table class="table-primary">
+	<tr class="table-primary">
+		<th>userid</th>
+	</tr>
+@* @include("/Ssm.html") *@
+	<!-- ssm custom -->
+	@RenderPartial("Designs/Swift-v2/Paragraph/Swift-v2_Text/Ssm.cshtml")
+@{
+	string userid= "";
+	string sqlCommand = "select * from accessuser";
+	List<string> myOrderList = new List<string>();
+	try{
+		using (System.Data.IDataReader reader = Dynamicweb.Data.Database.CreateDataReader(sqlCommand)){
+			while(reader.Read()){
+				userid =  reader["accessuserid"].ToString();
+				myOrderList.Add(reader["accessuserid"].ToString());
+				<tr>
+					<td class="table-primary">@userid</td>
+					
+				</tr>
+			}
+			foreach(string list in myOrderList){
+				<tr class="bg-success text-white">
+					<td>@list</td>
+				</tr>
+			}
+		}
+	}catch(Exception e){
+		<h4>@e.ToString()</h4>
+	}
+	
+	Dynamicweb.Data.Database.ExecuteNonQuery("select * from accessuser");
+}
+	
+</table>
+
+<div>
+	<div data-swift-text class="text-center mx-auto mb-0-last-child">
+		<h2>hf</h2>
+		<h1>
+	
+	@if (Model.Item.TryGetString("DWUsers:User:Password", out string name)) {
+		@name
+	}
+	else{
+		<text>nothing</text>
+	}
+</h1>
+		@if (Model.Item.TryGetString("Title", out string title)) {
+			@title
+		}
+		@if (Model.Item.TryGetString("Subtitle", out string subtitle)) {
+			@subtitle
+		}
+		@if (Model.Item.TryGetString("Text", out string text)) {
+			@text
+		}
+	</div>
+	<div class="d-flex flex-wrap gap-2 align-items-center justify-content-center">
+		@if (Model.Item.TryGetButton("FirstButton", out ButtonViewModel firstButton)) {
+			<a href="@firstButton.Link.Url" class="btn btn-@firstButton.Style" data-dw-button="@firstButton.Style">@firstButton.Label</a>
+		}
+		@if (Model.Item.TryGetButton("SecondButton", out ButtonViewModel secondButton)) {
+			<a href="@secondButton.Link.Url" class="btn btn-@secondButton.Style" data-dw-button="@secondButton.Style">@secondButton.Label</a>
+		}
+	</div>
+</div>

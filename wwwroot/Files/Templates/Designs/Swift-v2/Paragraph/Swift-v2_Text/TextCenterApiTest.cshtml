@@ -1,0 +1,77 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Frontend
+@using System.Net.Http;
+@using Newtonsoft.Json;
+@{
+    string apiResponse = "";
+	dynamic data = null;
+    // The 'using' block ensures the HttpClient is disposed and prevents socket leaks
+    using (var client = new HttpClient())
+    {
+        try
+        {
+            // .Result blocks the thread to wait for the response (synchronous)
+            var response = client.GetAsync("http://localhost:5001/api/book/sortbymaxprice").Result;
+            
+            string json = response.Content.ReadAsStringAsync().Result;
+            
+            // Parse JSON dynamically
+            data = JsonConvert.DeserializeObject<dynamic>(json);
+        }
+        catch (System.Exception ex)
+        {
+            apiResponse = "API Error: " + ex.Message;
+        }
+    }
+}
+<style>
+	table, th, td {
+  border: 1px solid black;
+  padding: 10px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<div>
+	<div>
+		<h6></h6>
+		<table>
+		@if (data != null)
+		{
+			@* <h3>@data.GetType().ToString()</h3> *@
+			foreach(var b in data){
+				<text>
+					<tr>
+						<td>@b.id</td>
+						<td>@b.name</td>
+						<td>@b.author</td>
+						<td>@b.price</td>
+						<td>@b.description</td>
+						<td>@b.publicationDate</td>
+					</tr>
+				</text>
+			}
+		}
+			
+		</table>
+	</div>
+	<div data-swift-text class="text-center mx-auto mb-0-last-child">
+		@if (Model.Item.TryGetString("Title", out string title)) {
+			@title
+		}
+		@if (Model.Item.TryGetString("Subtitle", out string subtitle)) {
+			@subtitle
+		}
+		@if (Model.Item.TryGetString("Text", out string text)) {
+			@text
+		}
+	</div>
+	<div class="d-flex flex-wrap gap-2 align-items-center justify-content-center">
+		@if (Model.Item.TryGetButton("FirstButton", out ButtonViewModel firstButton)) {
+			<a href="@firstButton.Link.Url" class="btn btn-@firstButton.Style" data-dw-button="@firstButton.Style">@firstButton.Label</a>
+		}
+		@if (Model.Item.TryGetButton("SecondButton", out ButtonViewModel secondButton)) {
+			<a href="@secondButton.Link.Url" class="btn btn-@secondButton.Style" data-dw-button="@secondButton.Style">@secondButton.Label</a>
+		}
+	</div>
+</div>

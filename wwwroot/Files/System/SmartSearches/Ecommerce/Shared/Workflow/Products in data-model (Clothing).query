@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Query ID="7fa338fe-0e69-49ce-84ff-5317c772b73f" Name="Products in data-model (Clothing)">
+  <Meta />
+  <Settings />
+  <Parameters />
+  <Source Repository="ProductsBackend" Item="Products.index" Type="Dynamicweb.Indexing.Queries.IndexQueryProvider, Dynamicweb.Core" />
+  <SortOrder />
+  <Expressions>
+    <GroupExpression Operator="And">
+      <BinaryExpression Operator="In" Disabled="false">
+        <Left>
+          <FieldExpression Field="ParentGroupIDs" Source="ParentGroupIDs" />
+        </Left>
+        <Right>
+          <ConstantExpression Value="GROUP67" Type="System.String[]" />
+        </Right>
+      </BinaryExpression>
+    </GroupExpression>
+  </Expressions>
+</Query>

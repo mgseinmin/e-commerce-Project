@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Query ID="84ee0c3a-724a-4175-9ed8-2fd0610cbbe9" Name="PIM total">
+  <Meta />
+  <Settings />
+  <Parameters />
+  <Source Repository="ProductsBackend" Item="Products.index" Type="Dynamicweb.Indexing.Queries.IndexQueryProvider, Dynamicweb.Core" />
+  <SortOrder />
+  <Expressions>
+    <GroupExpression Operator="And">
+      <BinaryExpression Operator="In" Disabled="false">
+        <Left>
+          <FieldExpression Field="ShopIDs" Source="ShopIDs" />
+        </Left>
+        <Right>
+          <TermExpression Value="SHOP5" DisplayValue="SHOP5" Type="System.String[]" />
+        </Right>
+      </BinaryExpression>
+    </GroupExpression>
+  </Expressions>
+</Query>

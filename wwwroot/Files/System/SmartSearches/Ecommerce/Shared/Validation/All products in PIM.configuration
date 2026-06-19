@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration ConfigurationTypeName="Dynamicweb.Ecommerce.IndexQuery.ProductQueryConfiguration, Dynamicweb.Ecommerce" AppendCompletionExpressions="false">
+  <CompletionRules />
+  <CompletionLanguages>
+    <Language ID="LANG2" />
+    <Language ID="LANG1" />
+  </CompletionLanguages>
+</Configuration>

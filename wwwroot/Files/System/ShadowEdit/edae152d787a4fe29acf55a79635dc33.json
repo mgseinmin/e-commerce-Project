@@ -1,0 +1,1 @@
+{"Id":"edae152d787a4fe29acf55a79635dc33","Name":"","ModelType":"Dynamicweb.Users.UI.Models.UserDataModel","Query":{"Query":{"Id":2,"Source":{"GroupId":1227,"RepositoryName":"","QueryName":"","SmartSearchId":"","SourceType":0},"ModelIdentifier":"","Type":"UserById","QueryContext":{"ScreenTypeName":"UserEdit"}},"QueryType":"UserById"},"Modifications":[]}

@@ -1,0 +1,47 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.Navigation.NavigationTreeViewModel>
+@using Dynamicweb
+@using Dynamicweb.Ecommerce.Orders
+@using System.IO
+
+<nav class="nav flex-nowrap offcanvas-utility-navigation pe-2" aria-label="@Translate("Utility navigation")">
+	@foreach (var node in Model.Nodes)
+	{
+		var nodePage = Dynamicweb.Content.Services.Pages.GetPage(node.PageId);
+		string pageType = nodePage.ItemType;
+		string icon = string.Empty;
+		if (nodePage.PropertyItem is object)
+		{
+			if(nodePage.PropertyItem.TryGetValue("Icon", out object pageIconValue))
+			{
+				icon = Dynamicweb.Core.Converter.ToString(pageIconValue);
+			}
+		}
+		var inPathClass = node.InPath ? "in-path" : string.Empty;
+		var activeClass = node.IsActive ? "active fw-bold" : string.Empty;
+
+		<div class="nav-item@(node.IsActive ? " active" : string.Empty)">
+			@if (node.IsClickable)
+			{
+				@:<a class="nav-link p-2 @(activeClass)" href="@node.Link">
+			}
+			else
+			{
+				@:<span class="nav-link p-2">
+			}
+
+				@if (icon.EndsWith(".svg", StringComparison.OrdinalIgnoreCase))
+				{
+					<span class="icon-3 pe-none">@ReadFile(icon)</span>
+				}
+
+			@if (node.IsClickable)
+			{
+				@:</a>
+			}
+			else
+			{
+				@:</span>
+			}
+		</div>
+	}
+</nav>

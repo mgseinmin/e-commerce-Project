@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration ConfigurationTypeName="Dynamicweb.Ecommerce.IndexQuery.ProductQueryConfiguration, Dynamicweb.Ecommerce" AppendCompletionExpressions="false" OpenProductEditScreenByDefault="false">
+  <CompletionRules>
+    <Rule ID="1013" />
+  </CompletionRules>
+  <CompletionLanguages>
+    <Language ID="ENU" />
+    <Language ID="DAN" />
+    <Language ID="DEU" />
+    <Language ID="NLD" />
+    <Language ID="FRA" />
+  </CompletionLanguages>
+  <ListScreenViewPresetId>1</ListScreenViewPresetId>
+  <EditScreenViewPresetId>8</EditScreenViewPresetId>
+  <IsDefault>false</IsDefault>
+  <EditScreenLanguages />
+</Configuration>

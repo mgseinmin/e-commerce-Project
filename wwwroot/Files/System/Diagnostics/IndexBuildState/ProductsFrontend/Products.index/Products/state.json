@@ -1,0 +1,18 @@
+{
+  "Repository": "ProductsFrontend",
+  "IndexName": "Products.index",
+  "InstanceName": "Products",
+  "BuildName": "Full",
+  "OperationId": "f2463b2107124e90b33c0399b8124110",
+  "State": "Completed",
+  "StartedAtUtc": "2026-06-19T07:24:29.5051894Z",
+  "LastHeartbeatUtc": "2026-06-19T07:24:52.4847237Z",
+  "FinishedAtUtc": "2026-06-19T07:24:52.4847237Z",
+  "LastSuccessfulBuildUtc": "2026-06-19T07:24:52.4847237Z",
+  "ResumeCursor": "3588",
+  "ResumeSupported": true,
+  "IsOnlineInstance": false,
+  "ErrorSummary": "",
+  "ErrorDetails": "",
+  "ServerId": "DESKTOP-2BPIN9V"
+}

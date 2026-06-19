@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration ConfigurationTypeName="Dynamicweb.Ecommerce.IndexQuery.ProductQueryConfiguration, Dynamicweb.Ecommerce" AppendCompletionExpressions="false" OpenProductEditScreenByDefault="false">
+  <CompletionRules>
+    <Rule ID="2" />
+    <Rule ID="1011" />
+  </CompletionRules>
+  <CompletionLanguages>
+    <Language ID="LANG1" />
+  </CompletionLanguages>
+  <ListScreenViewPresetId>2</ListScreenViewPresetId>
+  <EditScreenViewPresetId>6</EditScreenViewPresetId>
+  <IsDefault>false</IsDefault>
+</Configuration>

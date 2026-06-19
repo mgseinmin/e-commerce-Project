@@ -1,0 +1,52 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Ecommerce.CustomerExperienceCenter.Favorites
+@using Dynamicweb.Content
+
+@{
+	int favoritesPageId = GetPageIdByNavigationTag("FavoritesPage") != 0 ? GetPageIdByNavigationTag("FavoritesPage") : Pageview?.ID ?? 0;
+	var favoritesLists = Pageview?.User?.GetFavoriteLists();
+
+	if (Model.Item?.TryGetLink("FavoritesPage", out var page) ?? false)
+	{
+		favoritesPageId = page?.PageId ?? 0;
+	}
+}
+
+<div class="nav-wrapper" data-swift-menu="@Model.ID">
+	<div class="nav-item dropdown position-static">
+		@if (favoritesLists?.Count() > 1)
+		{
+			<button class="nav-link hstack p-2 gap-2 text-nowrap text-decoration-underline-hover" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="@Translate("Toggle favorites")" id="FavoritesDropdown_@Model.ID" data-swift-favorites>
+				@if (Model.Item?.TryGetString("Icon", out var icon) ?? false && icon.Contains(".svg"))
+				{
+					<span class="icon-3 pe-none">@ReadFile(icon)</span>
+				}
+				@if (Model.Item?.TryGetString("Title", out string? title) ?? false)
+				{
+					@title
+				}
+			</button>
+			<ul class="dropdown-menu dropdown-menu-shadow" aria-labelledby="FavoritesDropdown_@Model.ID" data-dw-colorscheme="light">
+				@foreach (var node in favoritesLists)
+				{
+					<li>
+						<a href="/Default.aspx?ID=@(favoritesPageId)&FavoriteListId=@(node.ListId)" class="dropdown-item">@node.Name</a>
+					</li>
+				}
+			</ul>
+		}
+		else
+		{
+			<a href="/Default.aspx?ID=@favoritesPageId" class="nav-link hstack p-2 gap-2 text-nowrap" data-swift-favorites>
+				@if (Model.Item?.TryGetString("Icon", out var icon) ?? false && icon.Contains(".svg"))
+				{
+					<span class="icon-3 pe-none">@ReadFile(icon)</span>
+				}
+				@if (Model.Item?.TryGetString("Title", out string? title) ?? false)
+				{
+					@title
+				}
+			</a>
+		}
+	</div>
+</div>

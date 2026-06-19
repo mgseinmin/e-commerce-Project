@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Query ID="5ff32ee4-d005-491b-80ad-fc743c4e5bf3" Name="Bikes validation">
+  <Meta />
+  <Settings />
+  <Parameters />
+  <Source Repository="ProductsBackend" Item="Products.index" Type="Dynamicweb.Indexing.Queries.IndexQueryProvider, Dynamicweb.Core" />
+  <SortOrder />
+  <Expressions>
+    <GroupExpression Operator="And">
+      <BinaryExpression Operator="In" Disabled="false">
+        <Left>
+          <FieldExpression Field="ShopIDs" Source="ShopIDs" />
+        </Left>
+        <Right>
+          <TermExpression Value="SHOP1" DisplayValue="" Type="System.String[]" />
+        </Right>
+      </BinaryExpression>
+      <GroupExpression Operator="Or">
+        <BinaryExpression Operator="IsEmpty" Disabled="false">
+          <Left>
+            <FieldExpression Field="Name" Source="Name" />
+          </Left>
+          <Right>
+            <ConstantExpression Value="" Type="System.String" />
+          </Right>
+        </BinaryExpression>
+        <BinaryExpression Operator="IsEmpty" Disabled="false">
+          <Left>
+            <FieldExpression Field="Number" Source="Number" />
+          </Left>
+          <Right>
+            <ConstantExpression Value="" Type="System.String" />
+          </Right>
+        </BinaryExpression>
+        <BinaryExpression Operator="IsEmpty" Disabled="false">
+          <Left>
+            <FieldExpression Field="ShortDescription" Source="ShortDescription" />
+          </Left>
+          <Right>
+            <ConstantExpression Value="" Type="System.String" />
+          </Right>
+        </BinaryExpression>
+        <BinaryExpression Operator="IsEmpty" Disabled="false">
+          <Left>
+            <FieldExpression Field="LongDescription" Source="LongDescription" />
+          </Left>
+          <Right>
+            <ConstantExpression Value="" Type="System.String" />
+          </Right>
+        </BinaryExpression>
+      </GroupExpression>
+    </GroupExpression>
+  </Expressions>
+</Query>

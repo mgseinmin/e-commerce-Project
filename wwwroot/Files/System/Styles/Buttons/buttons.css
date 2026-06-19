@@ -1,0 +1,7 @@
+/* Buttons */
+.dw-button, [data-dw-button] {
+--dw-btn-padding-x: 2.5rem;
+--dw-btn-padding-y: 1rem;
+--dw-btn-border-radius: 50rem;
+--dw-btn-border-width: 1px;
+}

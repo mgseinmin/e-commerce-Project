@@ -1,0 +1,1 @@
+{"Id":"9008b9328d424a1e954b0dbb0ca582f3","Name":"","ModelType":"Dynamicweb.Application.UI.Models.QueryViewDataModel","Query":{"Query":{"Name":"PaymentById","Type":"QueryByName","QueryContext":{"ScreenTypeName":"QueryListEdit"}},"QueryType":"QueryByName"},"Modifications":[{"Key":"Properties|Id","Value":"pay2"}]}

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Query ID="1917075e-f85c-4431-ae30-5c88cefa2775" Name="PIM miss-mandatories">
+  <Meta />
+  <Settings />
+  <Parameters />
+  <Source Repository="ProductsBackend" Item="Products.index" Type="Dynamicweb.Indexing.Queries.IndexQueryProvider, Dynamicweb.Core" />
+  <SortOrder />
+  <Expressions>
+    <GroupExpression Operator="And">
+      <BinaryExpression Operator="In" Disabled="false">
+        <Left>
+          <FieldExpression Field="ShopIDs" Source="ShopIDs" />
+        </Left>
+        <Right>
+          <TermExpression Value="SHOP5" DisplayValue="SHOP5" Type="System.String[]" />
+        </Right>
+      </BinaryExpression>
+      <GroupExpression Operator="Or">
+        <BinaryExpression Operator="IsEmpty" Disabled="false">
+          <Left>
+            <FieldExpression Field="DefaultImageFromDetailOrImagePattern" Source="DefaultImageFromDetailOrImagePattern" />
+          </Left>
+          <Right>
+            <ConstantExpression Value="" Type="System.String" />
+          </Right>
+        </BinaryExpression>
+      </GroupExpression>
+    </GroupExpression>
+  </Expressions>
+</Query>

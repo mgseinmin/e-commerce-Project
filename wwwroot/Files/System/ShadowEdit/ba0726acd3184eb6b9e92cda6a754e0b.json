@@ -1,0 +1,1 @@
+{"Id":"ba0726acd3184eb6b9e92cda6a754e0b","Name":"","ModelType":"Dynamicweb.Users.UI.Models.UserPasswordDataModel","Query":{"Query":{"Id":1329,"Type":"UserPasswordByUserId"},"QueryType":"UserPasswordByUserId"},"Modifications":[{"Key":"Password","Value":"Administrator1"}]}

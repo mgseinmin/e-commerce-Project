@@ -1,0 +1,99 @@
+/* Swift */
+.dw-colorscheme-light, 
+[data-dw-colorscheme="light"] {
+/* Light */
+--dw-color-background: #FFFFFF;
+--dw-color-background-rgb: 255, 255, 255;
+--dw-color-foreground: #242424;
+--dw-color-foreground-rgb: 36, 36, 36;
+--dw-color-button-primary: #4d4d4d;
+--dw-color-button-primary-rgb: 77, 77, 77;
+--dw-color-button-primary-contrast: #fff;
+--dw-color-button-secondary: #ededed;
+--dw-color-button-secondary-rgb: 237, 237, 237;
+--dw-color-button-secondary-contrast: #000;
+}
+.dw-colorscheme-lightgrey1, 
+[data-dw-colorscheme="lightgrey1"] {
+/* Light Grey 1 */
+--dw-color-background: #ededed;
+--dw-color-background-rgb: 237, 237, 237;
+--dw-color-foreground: #242424;
+--dw-color-foreground-rgb: 36, 36, 36;
+--dw-color-button-primary: #242424;
+--dw-color-button-primary-rgb: 36, 36, 36;
+--dw-color-button-primary-contrast: #fff;
+--dw-color-button-secondary: #6e6e6e;
+--dw-color-button-secondary-rgb: 110, 110, 110;
+--dw-color-button-secondary-contrast: #fff;
+}
+.dw-colorscheme-lightgrey2, 
+[data-dw-colorscheme="lightgrey2"] {
+/* Light Grey 2 */
+--dw-color-background: #f2f2f2;
+--dw-color-background-rgb: 242, 242, 242;
+--dw-color-foreground: #242424;
+--dw-color-foreground-rgb: 36, 36, 36;
+--dw-color-button-primary: #004fff;
+--dw-color-button-primary-rgb: 0, 79, 255;
+--dw-color-button-primary-contrast: #fff;
+--dw-color-button-secondary: #6e6e6e;
+--dw-color-button-secondary-rgb: 110, 110, 110;
+--dw-color-button-secondary-contrast: #fff;
+}
+.dw-colorscheme-dark, 
+[data-dw-colorscheme="dark"] {
+/* Dark */
+--dw-color-background: #242424;
+--dw-color-background-rgb: 36, 36, 36;
+--dw-color-foreground: #ffffff;
+--dw-color-foreground-rgb: 255, 255, 255;
+--dw-color-button-primary: #f5f5f5;
+--dw-color-button-primary-rgb: 245, 245, 245;
+--dw-color-button-primary-contrast: #000;
+--dw-color-button-secondary: #8c8c8c;
+--dw-color-button-secondary-rgb: 140, 140, 140;
+--dw-color-button-secondary-contrast: #fff;
+}
+.dw-colorscheme-darksubtle, 
+[data-dw-colorscheme="darksubtle"] {
+/* Dark Subtle */
+--dw-color-background: #575757;
+--dw-color-background-rgb: 87, 87, 87;
+--dw-color-foreground: #ffffff;
+--dw-color-foreground-rgb: 255, 255, 255;
+--dw-color-button-primary: #242424;
+--dw-color-button-primary-rgb: 36, 36, 36;
+--dw-color-button-primary-contrast: #fff;
+--dw-color-button-secondary: #ededed;
+--dw-color-button-secondary-rgb: 237, 237, 237;
+--dw-color-button-secondary-contrast: #000;
+}
+.dw-colorscheme-primary, 
+[data-dw-colorscheme="primary"] {
+/* Primary */
+--dw-color-background: #004fff;
+--dw-color-background-rgb: 0, 79, 255;
+--dw-color-foreground: #ffffff;
+--dw-color-foreground-rgb: 255, 255, 255;
+--dw-color-button-primary: #f5f5f5;
+--dw-color-button-primary-rgb: 245, 245, 245;
+--dw-color-button-primary-contrast: #000;
+--dw-color-button-secondary: #8c8c8c;
+--dw-color-button-secondary-rgb: 140, 140, 140;
+--dw-color-button-secondary-contrast: #fff;
+}
+.dw-colorscheme-secondary, 
+[data-dw-colorscheme="secondary"] {
+/* Secondary */
+--dw-color-background: #242424;
+--dw-color-background-rgb: 36, 36, 36;
+--dw-color-foreground: #ffffff;
+--dw-color-foreground-rgb: 255, 255, 255;
+--dw-color-button-primary: #f5f5f5;
+--dw-color-button-primary-rgb: 245, 245, 245;
+--dw-color-button-primary-contrast: #000;
+--dw-color-button-secondary: #8c8c8c;
+--dw-color-button-secondary-rgb: 140, 140, 140;
+--dw-color-button-secondary-contrast: #fff;
+}

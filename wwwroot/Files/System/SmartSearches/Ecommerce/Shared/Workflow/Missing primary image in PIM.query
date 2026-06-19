@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Query ID="fcefcdec-8627-4c61-b72e-37ecf07ab2c1" Name="Missing primary image in PIM">
+  <Meta />
+  <Settings />
+  <Source Repository="ProductsBackend" Item="Products.index" Type="Dynamicweb.Indexing.Queries.IndexQueryProvider, Dynamicweb.Core" />
+  <Expressions>
+    <GroupExpression Operator="And">
+      <BinaryExpression Operator="In" Disabled="true">
+        <Left>
+          <FieldExpression Field="ParentGroupIDs" />
+        </Left>
+        <Right>
+          <TermExpression Value="GROUP65,GROUP67" DisplayValue="" Type="System.String[]" />
+        </Right>
+      </BinaryExpression>
+      <BinaryExpression Operator="IsEmpty" Disabled="false">
+        <Left>
+          <FieldExpression Field="DefaultImageFromDetailOrImagePattern" />
+        </Left>
+        <Right>
+          <ConstantExpression Value="" Type="System.String" />
+        </Right>
+      </BinaryExpression>
+      <GroupExpression Operator="And">
+        <BinaryExpression Operator="In" Disabled="false">
+          <Left>
+            <FieldExpression Field="ShopIDs" Source="ShopIDs" />
+          </Left>
+          <Right>
+            <TermExpression Value="SHOP5" DisplayValue="" Type="System.String[]" />
+          </Right>
+        </BinaryExpression>
+      </GroupExpression>
+    </GroupExpression>
+  </Expressions>
+  <Parameters />
+  <SortOrder />
+</Query>

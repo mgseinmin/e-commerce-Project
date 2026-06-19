@@ -1,0 +1,32 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Ecommerce.ProductCatalog
+
+@{
+	//Set default product data for use in Visual Editor
+	if (Pageview.IsVisualEditorMode)
+	{
+		ProductViewModelSettings productSetting = new ProductViewModelSettings
+		{
+			LanguageId = Dynamicweb.Ecommerce.Common.Context.LanguageID,
+			CurrencyCode = Dynamicweb.Ecommerce.Common.Context.Currency.Code,
+			CountryCode = Dynamicweb.Ecommerce.Common.Context.Country.Code2,
+			ShopId = Pageview.Area.EcomShopId
+		};
+	}
+	else if (!Dynamicweb.Context.Current.Items.Contains("ProductDetails"))
+	{
+		ProductViewModel product = new ProductViewModel();
+		Dynamicweb.Context.Current.Items.Add("ProductDetails", product);
+	}
+}
+
+@if (Pageview.IsVisualEditorMode)
+{
+	<div class="alert alert-info" role="alert">
+		<span>@Translate("Product catalog App: Edit this column to configure. (Product catalog app must be attached this paragraph)")</span>
+	</div>
+}
+
+<div class="item_@Model.Item.SystemName.ToLower()">
+	@Model.GetModuleOutput()
+</div>

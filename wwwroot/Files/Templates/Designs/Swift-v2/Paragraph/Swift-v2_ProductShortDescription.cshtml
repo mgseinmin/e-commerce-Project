@@ -1,0 +1,18 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Ecommerce.ProductCatalog
+
+@{
+	ProductViewModel product = null;
+	if (Dynamicweb.Context.Current.Items.Contains("ProductDetails"))
+	{
+		product = (ProductViewModel)Dynamicweb.Context.Current.Items["ProductDetails"];
+	} else if (Pageview.IsVisualEditorMode) {
+		product = new ProductViewModel();
+		product.ShortDescription = Translate("Find the perfect product for a greener lifestyle");
+	}
+}
+
+@if (product is object)
+{
+	<div class="mb-0-last-child item_@Model.Item.SystemName.ToLower()" itemprop="disambiguatingDescription">@product.ShortDescription</div>
+}

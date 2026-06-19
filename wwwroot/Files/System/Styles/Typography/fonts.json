@@ -1,0 +1,16 @@
+{
+  "Id": "fonts",
+  "Name": "Fonts",
+  "BaseFontSize": 16,
+  "BaseFontScale": 1.333,
+  "ParagraphFont": "Inter",
+  "ParagraphFontWeight": 500,
+  "ParagraphLineHeight": 1.5,
+  "HeadingFont": "Inter",
+  "HeadingFontWeight": 600,
+  "HeadingLetterSpacing": -0.02,
+  "HeadingLineHeight": 1,
+  "ButtonFont": "Inter",
+  "ButtonFontWeight": 600,
+  "ButtonLineHeight": 1
+}

@@ -1,0 +1,1 @@
+{"Id":"aa02ca3d39f14de8be628a2418ffc536","Name":"","ModelType":"Dynamicweb.Application.UI.Models.QueryViewDataModel","Query":{"Query":{"Name":"UserAddressById","Type":"QueryByName","QueryContext":{"ScreenTypeName":"QueryListEdit"}},"QueryType":"QueryByName"},"Modifications":[{"Key":"Properties|Id","Value":"1"}]}

@@ -1,0 +1,1 @@
+{"Id":"131b779ad3154cf8b19cccf056649fe6","Name":"","ModelType":"Dynamicweb.Content.UI.Models.PageInfoModel","Query":{"Query":{"SourcePageId":6860,"DestinationParentPageId":0,"DestinationAreaId":0,"CopyHere":false,"Type":"NewPageInfoForCopy"},"QueryType":"NewPageInfoForCopy"},"Modifications":[{"Key":"DestinationType","Value":2},{"Key":"DestinationAreaId","Value":27}]}

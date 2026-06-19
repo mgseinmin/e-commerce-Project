@@ -1,0 +1,131 @@
+@inherits Dynamicweb.Rendering.ViewModelTemplate<Dynamicweb.Frontend.ParagraphViewModel>
+@using Dynamicweb.Ecommerce.ProductCatalog
+@using Dynamicweb.Ecommerce.Products
+
+@{
+	ProductViewModel product = null;
+	if (Dynamicweb.Context.Current.Items.Contains("ProductDetails"))
+	{
+		product = (ProductViewModel)Dynamicweb.Context.Current.Items["ProductDetails"];
+	} else if (Pageview.IsVisualEditorMode) {
+		product = new ProductViewModel();
+		product.Price = new PriceViewModel() {
+			Price = 99,
+			PriceFormatted = "99 " + Pageview.Area.EcomCurrencyId,
+			PriceWithoutVat = 99,
+			PriceWithoutVatFormatted = "99 " + Pageview.Area.EcomCurrencyId,
+			PriceWithVat = 99,
+			PriceWithVatFormatted = "99 " + Pageview.Area.EcomCurrencyId
+		};
+		product.PriceInformative = new PriceViewModel() {
+			Price = 49,
+			PriceFormatted = "49 " + Pageview.Area.EcomCurrencyId,
+			PriceWithoutVat = 49,
+			PriceWithoutVatFormatted = "49 " + Pageview.Area.EcomCurrencyId,
+			PriceWithVat = 49,
+			PriceWithVatFormatted = "49 " + Pageview.Area.EcomCurrencyId
+		};
+		product.PriceBeforeDiscount = new PriceViewModel() {
+			Price = 199,
+			PriceFormatted = "199 " + Pageview.Area.EcomCurrencyId,
+			PriceWithoutVat = 199,
+			PriceWithoutVatFormatted = "199 " + Pageview.Area.EcomCurrencyId,
+			PriceWithVat = 199,
+			PriceWithVatFormatted = "99 " + Pageview.Area.EcomCurrencyId
+		};
+	}
+
+	string anonymousUsersLimitations = Pageview.AreaSettings.GetRawValueString("AnonymousUsers", "");
+	bool anonymousUser = Pageview.User == null;
+	bool hidePrice = anonymousUsersLimitations.Contains("price") && anonymousUser;
+	
+	bool productIsDiscontinued = product is object  && product.Discontinued;
+	bool doNotShowPriceIfProductIsDiscontinued = Model.Item.GetBoolean("DoNotShowPriceIfProductIsDiscontinued");
+	var isDiscontinued = productIsDiscontinued && doNotShowPriceIfProductIsDiscontinued;
+
+	string priceType = string.Empty;
+	if (Dynamicweb.Context.Current.Items.Contains("PriceType"))
+	{
+		priceType = Dynamicweb.Context.Current.Items["PriceType"].ToString().ToLower();
+	}
+}
+
+@if (product is object && !hidePrice && !isDiscontinued && priceType != "fixedprice") {
+	bool showInformativePrice = Model.Item.GetBoolean("ShowInformativePrice");
+	string unitId = !string.IsNullOrEmpty(Dynamicweb.Context.Current.Request.Form.Get("UnitId")) ? Dynamicweb.Context.Current.Request.Form.Get("UnitId") : string.Empty;
+
+	string priceFontSize = Model.Item.GetRawValueString("PriceSize", "fs-2");
+	string horizontalAlign = Model.Item.GetRawValueString("HorizontalAlignment", "");
+	string layout = Model.Item.GetRawValueString("Layout", "horizontal");
+	string textAlign = horizontalAlign == "center" ? "text-center" : string.Empty;
+	textAlign = horizontalAlign == "end" ? "text-end" : textAlign;
+
+	horizontalAlign = horizontalAlign == "center" && layout == "horizontal" ? "justify-content-center" : horizontalAlign;
+	horizontalAlign = horizontalAlign == "end" && layout == "horizontal" ? "justify-content-end" : horizontalAlign;
+	horizontalAlign = horizontalAlign == "center" && layout == "vertical" ? "align-items-center" : horizontalAlign;
+	horizontalAlign = horizontalAlign == "end" && layout == "vertical" ? "align-items-end" : horizontalAlign;
+
+	string flexDirection = layout == "horizontal" ? "align-items-end" : "flex-column";
+	string flexGap = layout == "horizontal" ? "gap-3" : string.Empty;
+	string order = layout == "horizontal" ? string.Empty : "order-2";
+
+	string? priceMin = product?.VariantInfo?.PriceMin?.PriceFormatted;
+	string? priceMax = product?.VariantInfo?.PriceMax?.PriceFormatted;
+	string price = !string.IsNullOrEmpty(unitId) ? product.GetPrice(unitId).Price.PriceFormatted : product?.Price.PriceFormatted;
+	price = priceMin != priceMax ? price = priceMin + " - " + priceMax : price;
+
+	string beforePrice = !string.IsNullOrEmpty(unitId) ? product.GetPrice(unitId).PriceBeforeDiscount.PriceFormatted : product?.PriceBeforeDiscount.PriceFormatted;
+
+	Uri url = Dynamicweb.Context.Current.Request.Url;
+	bool IsNeverOutOfStock = product.NeverOutOfstock;
+
+
+	<div class="@textAlign item_@Model.Item?.SystemName?.ToLower()" data-product-id="@product?.Id" data-variant-id="@product?.VariantId">
+		@if (showInformativePrice && product?.PriceInformative.Price != 0)
+		{
+			<div class="opacity-50">
+				<span>@Translate("RRP") </span>
+				<span class="text-decoration-line-through text-price">@product?.PriceInformative.PriceFormatted</span>
+			</div>
+		}
+		<div class="@priceFontSize m-0 d-flex flex-wrap @flexDirection @flexGap @horizontalAlign" style="row-gap: 0 !important" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+			<span itemprop="priceCurrency" content="@product?.Price.CurrencyCode" class="d-none"></span>
+			<span itemprop="price" content="@product?.Price.Price" class="d-none"></span>
+
+			@if (product.HasDiscount())
+			{
+				<span class="text-decoration-line-through opacity-75 @order">
+					<span class="text-price">@beforePrice</span>
+				</span>
+			}
+			
+			<span class="text-price">@price</span>
+			@if (product.Price.TryGetVatLabel(out string vatLabel)) {
+				<small class="opacity-85 fst-normal order-3">@Translate(vatLabel)</small>
+			}
+
+			@* Stock state for Schema.org, start *@
+			<link itemprop="url" href="@url">
+
+			@if (IsNeverOutOfStock)
+			{
+				<span itemprop="availability" class="d-none">@Translate("Available in stock")</span>
+			}
+			else if (product.StockLevel > 0)
+			{
+				<span itemprop="availability" class="d-none">@Translate("In stock")</span>
+			}
+			else
+			{
+				<span itemprop="availability" class="d-none">@Translate("Out of stock")</span>
+			}
+			@* Stock state for Schema.org, stop *@
+		</div>
+	</div>
+}
+else if (Pageview.IsVisualEditorMode)
+{
+	<div class="alert alert-dark m-0" role="alert">
+		<span>@Translate("No products available")</span>
+	</div>
+}
